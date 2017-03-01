@@ -58,6 +58,7 @@
     "pug": "^2.0.0-beta11",
     "sass-loader": "^6.0.2",
     "showcar-gulp": "github:autoscout24/showcar-gulp",
+    "speakingurl": "^13.0.0",
     "uglify-js": "^2.7.3",
     "webpack": "^1.14.0",
     "webpack-dev-server": "^1.16.2",

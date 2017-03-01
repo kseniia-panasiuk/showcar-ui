@@ -11,9 +11,20 @@ aside {
   background-color: #ccc; padding: 20px; border-right: 2px solid #999;
 }
 
+.side-navigation {
+  position: fixed;
+  top: 0;
+  // bottom: 0;
+  left: 0;
+  width: 300px;
+  height: 100%;
+}
+
 main {
   width: 100%;
   padding: 20px;
+  margin-left: 300px;
+  padding-bottom: 600px;
 }
 
 h1 {
@@ -36,7 +47,6 @@ h3 {
 }
 
 .code-demo {
-
   margin-top: 12px;
 
   button {
@@ -59,4 +69,8 @@ h3 {
     border: 1px solid #ccc;
     padding: 20px;
   }
+}
+
+[v-cloak] {
+  display: none;
 }

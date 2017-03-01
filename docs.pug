@@ -7,13 +7,15 @@ html
     //- link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/themes/prism-coy.min.css', media='x', onload='this.media="all"')
     
   body
-    div.page-container
+    div.page-container('v-cloak')
       aside.side-navigation
+        side-navigation
       main(role='main')
         include:test(title = 'Buttons in pug') src/06-components/atoms/button/buttons.md
         include:test src/06-components/atoms/collapse/collapse.md
 
     script(src='https://unpkg.com/vue@2.2.1/dist/vue.min.js')
+    script(src='https://unpkg.com/vue-router@2.3.0/dist/vue-router.min.js')
     script(src='docs.js')
     script(src='https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/prism.min.js')
     script(src='https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/components/prism-javascript.min.js')

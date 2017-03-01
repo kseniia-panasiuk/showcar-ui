@@ -1,37 +1,24 @@
 const gulp = require('gulp');
 const fs = require('fs-extra');
 
-const yaml = require('js-yaml');
-
 gulp.task('docs', () => {
-    // const x = yaml.safeLoad(fs.readFileSync('./docs-tree.yml'));
-
-    // const renderSection = (section, parents) => {
-    //     console.log(section.title, section.file, parents);
-    //     const ps = parents.map(x => x);
-    //     ps.push(section.title);
-    //     (section.sections || []).forEach(s => renderSection(s, ps));
-
-    // };
-
-    // renderSection(x, []);
-
     const pug = require('pug');
     const marked = require('marked');
     const renderer = new marked.Renderer();
     const defaultRenderer = renderer.code;
+    const slugify = text => {
+        const speakingUrl = require('speaking-url');
+        return speakingUrl.getSlug(text, { lang: 'en' });
+    };
 
     renderer.code = (text, level) => {
-        
         return `${text}<code-demo :collapsed="true">${defaultRenderer.call(renderer, text, level)}</code-demo>`;
     };
 
     const compiledFunction = pug.compileFile('docs.pug', {
         filters: {
             test: (txt, opts) => {
-                // console.log(txt, opts);
-                console.log(opts);
-                return marked(txt, { renderer });
+                return `${marked(txt, { renderer })}`;
             }
         }
     });
@@ -76,13 +63,14 @@ gulp.task('js:docs', () => {
     const webpackStream = require('webpack-stream');
     const webpack = require('webpack');
     const ExtractTextPlugin = require("extract-text-webpack-plugin");
-
+    let cache;
 
     return gulp.src('src/docs.js')
         .pipe(webpackStream({
             output: {
                 filename: 'docs.js'
             },
+            // cache,
             // module: {
             //     rules: [{
             //         test: /\.scss$/,
@@ -107,6 +95,10 @@ gulp.task('js:docs', () => {
             //     new ExtractTextPlugin('styles.css'),
             // ]
         }, webpack))
+        .on('error', function(err) {
+            console.error('WEBPACK ERROR', err);
+            this.emit('end');
+        })
         .pipe(gulp.dest('dist/'));
 });
 
