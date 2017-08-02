@@ -15,9 +15,8 @@
         return "";
     }
 
-    function postError(data) {
+    function postError(url, data) {
         var http = new XMLHttpRequest();
-        var url = getPostUrl();
 
         if (url !== "") {
             http.open("POST", url, true);
@@ -32,6 +31,7 @@
     }
 
     window.onerror = function(errorMsg, sourceUrl, lineNumber, column, errorObj) {
+        
         var data = {
             httpUri: location.href,
             httpReferrer: document.referrer,
@@ -44,7 +44,16 @@
             errorStacktrace: errorObj ? errorObj.stack : '',
             errorMessage: errorMsg || ''
         };
+        
+        var devUrl = "https://2w6tdi5ifg.execute-api.eu-west-1.amazonaws.com/default/event";
+        var prodUrl = "https://5q1eumnb90.execute-api.eu-west-1.amazonaws.com/default/event";
 
-        postError(JSON.stringify(data));
+        var url = (url.indexOf("dev-www.") > -1) ? devUrl : prodUrl;
+        postError(url, JSON.stringify(data));
+
+        var devShadowUrl = 'https://dev-js-error-logger.infinity.eu-west-1.s24cloud.net/log';
+        var prodShadowUrl = 'https://js-error-logger.infinity.eu-west-1.s24cloud.net/log';
+        var shadowUrl = (url.indexOf("dev-www.") > -1) ? devShadowUrl : prodShadowUrl;
+        postError(url, JSON.stringify(data));
     };
 })(navigator);
