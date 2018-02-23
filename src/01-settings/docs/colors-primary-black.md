@@ -2,7 +2,7 @@
 
 <div class="ndpl-component__colors ndpl-cf">
     <div class="ndpl-component__color-container">
-      <div class="ndpl-component__color" style="background-color: rgb(0, 0, 0);">
+      <div class="ndpl-component__color" style="background-color: rgb(0, 0, 0);" data-sketch-color="black-120">
         <div>
           #000<br>rgb(0, 0, 0)<br>$black-120
         </div>
