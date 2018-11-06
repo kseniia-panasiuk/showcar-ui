@@ -24,7 +24,7 @@ prepare() {
     git commit -am "build ${COMMIT_HASH} release ${PACKAGE_VERSION}"
     TAG="v${PACKAGE_VERSION}"
     git tag -a $TAG -m "build ${COMMIT_HASH} release ${PACKAGE_VERSION}"
-    git push origin $TAG
+    git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/Scout24/showcar-ui.git origin $TAG
 }
 
 

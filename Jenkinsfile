@@ -94,7 +94,10 @@ pipeline {
         unstash 'build-dist'
         unstash 'package.json'
         echo 'publish release'
-        sh './deploy/publish.sh'
+        withCredentials([usernamePassword(credentialsId: 'git-pass-credentials-ID', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
+            sh './deploy/publish.sh'
+        }
+
       }
     }
   }
