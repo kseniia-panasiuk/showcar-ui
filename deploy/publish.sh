@@ -10,6 +10,12 @@ fail() {
 }
 
 prepare() {
+
+    USER_NAME="$(git log -1 --pretty=format:'%an')"
+    USER_EMAIL="$(git log -1 --pretty=format:'%ae')"
+    git config --global user.email "${USER_EMAIL}"
+    git config --global user.name "${USER_NAME}"
+
     git checkout -b $RELEASE_BRANCH
     PACKAGE_VERSION=$(node -p -e "require('./package.json').version")
     git rm Jenkinsfile
