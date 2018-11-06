@@ -9,7 +9,7 @@ fail() {
 
 build_code() {
     sed -i -e "s=@@COMMIT_HASH@@=${GIT_COMMIT}=" ./package.json
-    npm install
+    npm install -f
     npm run build
     npm run docs
 }
