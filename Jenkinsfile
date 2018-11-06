@@ -29,6 +29,8 @@ pipeline {
       steps {
         sh './deploy/build.sh'
         stash includes: 'dist/*', name: 'build-dist'
+        stash includes: 'docs/*', name: 'docs-dist'
+        stash includes: 'package.json', name: 'package.json'
       }
 
     }
