@@ -33,25 +33,6 @@ pipeline {
 
     }
 
-    stage('PrepareDev') {
-      when {
-        beforeAgent true
-        branch 'refactoring-jenkins'
-      }
-
-      environment {
-        BRANCH='develop'
-      }
-
-      agent { node { label 'build-node' } }
-
-      steps {
-        unstash 'build-dist'
-        sh './deploy/prepare.sh'
-        stash includes: 'dist/*', name: 'output-dev-dist'
-      }
-    }
-
     stage('DeployDev') {
       when {
         beforeAgent true
@@ -65,36 +46,17 @@ pipeline {
       agent { node { label 'deploy-as24dev' } }
 
       steps {
-        unstash 'output-dev-dist'
-        echo 'deploy production'
+        unstash 'build-dist'
+        echo 'deploy development'
         //sh './deploy/deploy.sh'
-        slackSend channel: 'as24_acq_cxp_fizz', color: '#FFFF00', message: ":question: ${env.JOB_NAME} [${env.BUILD_NUMBER}] deploy to production waiting for approval. (<${env.BUILD_URL}|Open>)"
-        input message: "Approve build to be propagated to production?"
+        //slackSend channel: 'as24_acq_cxp_fizz', color: '#FFFF00', message: ":question: ${env.JOB_NAME} [${env.BUILD_NUMBER}] deploy to production waiting for approval. (<${env.BUILD_URL}|Open>)"
+        //input message: "Approve build to be propagated to production?"
       }
     }
 
 //  TODO - replace BrowserStack / Rakefile
 //  stage('IntegrationTests') {
 //  }
-
-    stage('PrepareProd') {
-      when {
-        beforeAgent true
-        branch 'refactoring-jenkins'
-      }
-
-      environment {
-        BRANCH='master'
-      }
-
-      agent { node { label 'build-node' } }
-
-      steps {
-        unstash 'build-dist'
-        sh './deploy/prepare.sh'
-        stash includes: 'dist/*', name: 'output-prod-dist'
-      }
-    }
 
     stage('DeployProd') {
       when {
@@ -108,10 +70,28 @@ pipeline {
 
       agent { node { label 'deploy-as24dev' } }
       steps {
-        unstash 'output-prod-dist'
+        unstash 'build-dist'
         echo 'deploy production'
 
         //sh './deploy/deploy.sh'
+      }
+    }
+
+    stage('Publish') {
+      when {
+        beforeAgent true
+        branch 'refactoring-jenkins'
+      }
+
+      environment {
+         BRANCH='master'
+      }
+
+      agent { node { label 'build-node' } }
+      steps {
+        unstash 'build-dist'
+        unstash 'package.json'
+        sh './deploy/publish.sh'
       }
     }
   }
