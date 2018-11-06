@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -e
+set -ev
 
 RELEASE_BRANCH="build-${COMMIT_HASH}"
 

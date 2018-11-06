@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -e
+set -ev
 
 ASSET_PATH="/assets/external/${SERVICE_NAME}/${BRANCH}/${COMMIT_HASH}"
 

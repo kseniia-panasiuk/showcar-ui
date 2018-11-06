@@ -91,6 +91,7 @@ pipeline {
       steps {
         unstash 'build-dist'
         unstash 'package.json'
+        echo 'publish release'
         sh './deploy/publish.sh'
       }
     }
