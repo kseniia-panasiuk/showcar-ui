@@ -21,7 +21,7 @@ pipeline {
     stage('Build') {
       when {
         beforeAgent true
-        branch 'refactoring-jenkins'
+        branch 'none'
       }
 
       agent { node { label 'build-node' } }
@@ -38,7 +38,7 @@ pipeline {
     stage('DeployDev') {
       when {
         beforeAgent true
-        branch 'refactoring-jenkins'
+        branch 'none'
       }
 
       environment {
@@ -63,7 +63,7 @@ pipeline {
     stage('DeployProd') {
       when {
         beforeAgent true
-        branch 'refactoring-jenkins'
+        branch 'none'
       }
 
       environment {
@@ -82,7 +82,7 @@ pipeline {
     stage('Publish') {
       when {
         beforeAgent true
-        branch 'refactoring-jenkins'
+        branch 'none'
       }
 
       environment {
