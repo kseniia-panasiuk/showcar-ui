@@ -49,7 +49,8 @@ const whiteList = [
     '__ut',
     'as24_identity',
     'noauth',
-    'random'
+    'random',
+    'as24ArticleType'
 ];
 
 const deleteCookieByName = function(cookie) {
